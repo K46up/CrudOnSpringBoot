@@ -2,10 +2,7 @@ package ru.kata.example.springbootdemo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.example.springbootdemo.model.User;
 import ru.kata.example.springbootdemo.service.UserService;
 
@@ -19,16 +16,17 @@ public class UserController {
     }
 
     @GetMapping("/people")                                                                                 //работает
-        public String printListUsers(Model model) {
+    public String printListUsers(Model model) {
         model.addAttribute("people", userService.getAll());
         return "people";
     }
 
-    @GetMapping("/delete_user")                                                                            //работает
+    @DeleteMapping("/delete_user")                                                                         //работает
     public String deleteUserById(@RequestParam(name = "id") Long id) {
         userService.delete(id);
         return "redirect:/people";
     }
+
     @GetMapping("/addUser")                                                                                //работает
     public String formAddUser(@ModelAttribute("user") User user) {
 
@@ -47,7 +45,7 @@ public class UserController {
         return "user";
     }
 
-    @PostMapping("/update")                                                                                //работает
+    @PutMapping("/update")                                                                                //работает
     public String update(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/people";
